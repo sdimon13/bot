@@ -32,21 +32,26 @@ class TestSendMessage extends Command
     {
         $botman = resolve('botman');
 
-        $objectEvent = ObjectsEvent
+        $objectsEvent = ObjectsEvent
             ::orderBy('event_datetime',  'desc')
             ->first();
 
-        $user = User::first();
-
-        $botman->say(
-            "Время: " . $objectEvent->event_datetime .
-            "\n\nОбьект: " . $objectEvent->object_number . ' ( ' . $objectEvent->object_name . ' )' .
-            "\n\nСобытие: " . $objectEvent->description_name . ' ( ' . $objectEvent->description_comment . ' )' .
-            "\n\nЗона: " . $objectEvent->zone_name .
-            "\n\nУстройство: " . $objectEvent->device_type . ' ( ' . $objectEvent->device_name . ' )' .
-            "\n\nАдрес: " . $objectEvent->address .
-            "\n\nКонтактные лица:\n" . implode(",\n", $objectEvent->contacts)
-        , $user->telegram_id, TelegramDriver::class);
+        User
+            ::where('type_id', 2)
+            ->orWhereHas('objects', function ($query) use ($objectsEvent) {
+                $query->where('object_id', $objectsEvent->object_id);
+            })
+            ->each(function ($user) use ($objectsEvent, $botman) {
+                $botman->say(
+                    "Время: " . $objectsEvent->event_datetime .
+                    "\n\nОбьект: " . $objectsEvent->object_number . ' ( ' . $objectsEvent->object_name . ' )' .
+                    "\n\nСобытие: " . $objectsEvent->description_name . ' ( ' . $objectsEvent->description_comment . ' )' .
+                    "\n\nЗона: " . $objectsEvent->zone_name .
+                    "\n\nУстройство: " . $objectsEvent->device_type . ' ( ' . $objectsEvent->device_name . ' )' .
+                    "\n\nАдрес: " . $objectsEvent->address .
+                    "\n\nКонтактные лица:\n" . implode(",\n", $objectsEvent->contacts)
+                    , $user->telegram_id, TelegramDriver::class);
+            });
         return 0;
     }
 }

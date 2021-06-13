@@ -22,3 +22,11 @@ Route::get('/botman/tinker', 'BotManController@tinker');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user/list', 'UserController@list')->name('users');
+Route::post('/user/add', 'UserController@add')->name('user.add');
+Route::get('user/get/{id}', 'UserController@get')->name('user.get');
+Route::get('user/delete/{id}', 'UserController@delete')->name('user.delete');
+Route::get('user/upgrade/{id}', 'UserController@upgrade')->name('user.upgrade');
+
+Route::post('/user/object/add', 'ObjectUserController@add')->name('user.object.add');
+Route::get('user/object/delete/{id}', 'ObjectUserController@delete')->name('user.object.delete');

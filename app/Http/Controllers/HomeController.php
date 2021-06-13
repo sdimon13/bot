@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ObjectsEvent;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $objectEvents = ObjectsEvent
+            ::simplePaginate(15);
+        return view('home', compact('objectEvents'));
     }
 }

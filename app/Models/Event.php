@@ -55,4 +55,17 @@ class Event extends Model
     {
         return $this->hasOne(EventDescription::class, 'ID', 'DESCRIPTION_REF');
     }
+
+    /*public function users()
+    {
+        $database = $this->getConnection()->getDatabaseName();
+        return $this->belongsToMany(
+            User::class,
+            "$database.event_user",
+            'event_id',
+            'user_id',
+            'ID',
+            'id'
+        );
+    }*/
 }

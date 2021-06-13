@@ -37,8 +37,13 @@ class ObjectsEventsSendingJob implements ShouldQueue
         $objectsEvent = ObjectsEvent::find($this->objectsEventId);
         $botman = resolve('botman');
 
-        User::where('type_id', 1)->each(function ($user) use ($objectsEvent, $botman) {
-            $botman->say(
+        User
+            ::where('type_id', 2)
+            ->orWhereHas('objects', function ($query) use ($objectsEvent) {
+                $query->where('object_id', $objectsEvent->object_id);
+            })
+            ->each(function ($user) use ($objectsEvent, $botman) {
+                $botman->say(
                 "Время: " . $objectsEvent->event_datetime .
                 "\n\nОбьект: " . $objectsEvent->object_number . ' ( ' . $objectsEvent->object_name . ' )' .
                 "\n\nСобытие: " . $objectsEvent->description_name . ' ( ' . $objectsEvent->description_comment . ' )' .

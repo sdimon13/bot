@@ -14,7 +14,7 @@ trait ValidationTrait
      *
      * @var mixed
      */
-    protected $defaultRules = 'scalar';
+    protected $defaultRules = '';
 
     /**
      * Названия полей
@@ -95,7 +95,7 @@ trait ValidationTrait
             if (\App::getLocale()) {
                 $file = $this->getTable();
                 $file = explode('.', $file, 2);
-                $file = \Arr::last($file);
+                $file = last($file);
 
                 $names = trans('model/'.$file.'.fields');
                 if (is_array($names)) {
