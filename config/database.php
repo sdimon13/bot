@@ -59,7 +59,7 @@ return [
             'host' => env('PG_DB_HOST', '127.0.0.1'),
             'port' => env('PG_DB_PORT', '5432'),
             'database' => env('PG_DB_DATABASE', 'strelec'),
-            'username' => env('PG_DB_USERNAME', 'postgres'),
+            'username' => env('PG_DB_USERNAME', 'admin'),
             'password' => env('PG_DB_PASSWORD', 'strelec'),
             'charset' => 'utf8',
             'prefix' => '',
@@ -81,7 +81,7 @@ return [
         'firebird' => [
             'driver'   => 'firebird',
             'host'     => env('F_DB_HOST', 'localhost'),
-            'database' => env('F_DB_DATABASE', 'D:\COURIER.fdb'),
+            'database' => env('F_DB_DATABASE', 'C:\ProgramData\Argus-Spectrum\PAK Strelets-Monitoring\COURIER.fdb'),
             'username' => env('F_DB_USERNAME', 'SYSDBA'),
             'password' => env('F_DB_PASSWORD', 'masterkey'),
             'charset'  => env('F_DB_CHARSET', 'utf8'),
